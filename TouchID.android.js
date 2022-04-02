@@ -47,6 +47,9 @@ export default {
         }
       );
     });
+  },
+  stop(){
+    NativeTouchID.stop()
   }
 };
 
