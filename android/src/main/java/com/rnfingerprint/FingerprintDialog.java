@@ -22,10 +22,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
 
-    private ImageView mFingerprintImage;
-    private TextView mFingerprintSensorDescription;
-    private TextView mFingerprintError;
-
     private String authReason;
     private int imageColor = 0;
     private int imageErrorColor = 0;
@@ -45,50 +41,12 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
         setCancelable(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
-
-        final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
-        mFingerprintDescription.setText(this.authReason);
-
-        this.mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
-        if (this.imageColor != 0) {
-            this.mFingerprintImage.setColorFilter(this.imageColor);
-        }
-
-        this.mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
-        this.mFingerprintSensorDescription.setText(this.sensorDescription);
-
-        this.mFingerprintError = (TextView) v.findViewById(R.id.fingerprint_error);
-        this.mFingerprintError.setText(this.errorText);
-
-        final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
-        mCancelButton.setText(this.cancelText);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onCancelled();
-            }
-        });
-
-        getDialog().setTitle(this.dialogTitle);
-        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
-                    return false; // pass on to be processed as normal
-                }
-
-                onCancelled();
-                return true; // pretend we've processed it
-            }
-        });
-
-        return v;
+        return null;
     }
 
     @Override
@@ -111,7 +69,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             this.isAuthInProgress = false;
         }
     }
-
 
     public void setCryptoObject(FingerprintManager.CryptoObject cryptoObject) {
         this.mCryptoObject = cryptoObject;
@@ -172,9 +129,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     @Override
     public void onError(String errorString, int errorCode) {
-        this.mFingerprintError.setText(errorString);
-        this.mFingerprintImage.setColorFilter(this.imageErrorColor);
-        this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
+        this.onCancelled();
     }
 
     @Override
