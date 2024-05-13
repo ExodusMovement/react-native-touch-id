@@ -1,6 +1,6 @@
 {
   "name": "@exodus/react-native-touch-id",
-  "version": "5.0.0-exodus.0",
+  "version": "5.0.0-exodus.1",
   "description": "React Native authentication with the native Touch ID popup.",
   "scripts": {
     "lint": "node_modules/.bin/eslint .",
